@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="crixec">孤独即自由</string>
+    <string name="nav_file_browser">文件浏览</string>
+    <string name="nav_file_search">文件搜索</string>
+    <string name="nav_file_suffix_replace">后缀替换</string>
+    <string name="nav_file_rename">批量改名</string>
+    <string name="nav_file_content_replace">内容替换</string>
+    <string name="nav_file_merge">批量合并</string>
+    <string name="nav_file_compare">文件对比</string>
+    <string name="nav_file_split">批量切割</string>
+    <string name="app_name">文件助手</string>
+    <string name="nav_share">分享</string>
+    <string name="nav_about">关于</string>
+    <string name="other">其他</string>
+    <string name="start_search">开始搜索</string>
+    <string name="stop_search">停止搜索</string>
+    <string name="input_start_path">起始路径</string>
+    <string name="input_search_file">搜索名称</string>
+    <string name="search_result">搜索结果</string>
+    <string name="file_name_cannot_be_empty">文件名不能为空</string>
+    <string name="path_cannot_be_empty">路径不能为空</string>
+    <string name="create">创建</string>
+    <string name="file">文件</string>
+    <string name="folder">文件夹</string>
+    <string name="name_cannot_be_empty">名称不能为空</string>
+    <string name="create_failed">创建失败</string>
+    <string name="create_successed">创建成功</string>
+    <string name="file_content">文件内容</string>
+    <string name="search_types">搜索类型</string>
+</resources>

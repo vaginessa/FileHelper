@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">File Helper</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="crixec">Loneliness is free</string>
+    <string name="nav_file_browser">File Browser</string>
+    <string name="nav_file_search">File Search</string>
+    <string name="nav_file_suffix_replace">Suffix Replace</string>
+    <string name="nav_file_rename">Batch Rename</string>
+    <string name="nav_file_content_replace">Content Replace</string>
+    <string name="nav_file_merge">Batch Merge</string>
+    <string name="nav_file_split">Batch Split</string>
+    <string name="nav_file_compare">File Compare</string>
+    <string name="nav_share">Share</string>
+    <string name="nav_about">About</string>
+    <string name="other">Other</string>
+    <string name="start_search">Start Search</string>
+    <string name="stop_search">Stop Search</string>
+    <string name="input_start_path">Start Path</string>
+    <string name="input_search_file">Search File Name</string>
+    <string name="search_result">Search Result</string>
+    <string name="file_name_cannot_be_empty">File name cannot be empty</string>
+    <string name="path_cannot_be_empty">Path cannot be empty</string>
+    <string name="create">Create</string>
+    <string name="file">File</string>
+    <string name="folder">Folder</string>
+    <string name="name_cannot_be_empty">Name cannot be empty</string>
+    <string name="create_successed">Create Successed</string>
+    <string name="create_failed">Create Failed</string>
+    <string name="file_content">File Content</string>
+    <string name="search_types">Search Types</string>
+</resources>

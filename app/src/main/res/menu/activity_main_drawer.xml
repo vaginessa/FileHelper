@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_file_browser"
+            android:icon="@drawable/ic_browser"
+            android:title="@string/nav_file_browser" />
+        <item
+            android:id="@+id/nav_file_search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/nav_file_search" />
+        <item
+            android:id="@+id/nav_file_content_replace"
+            android:icon="@drawable/ic_content_replace"
+            android:title="@string/nav_file_content_replace" />
+        <item
+            android:id="@+id/nav_file_suffix_replace"
+            android:icon="@drawable/ic_suffix_replace"
+            android:title="@string/nav_file_suffix_replace" />
+        <item
+            android:id="@+id/nav_file_compare"
+            android:icon="@drawable/ic_compare"
+            android:title="@string/nav_file_compare" />
+        <item
+            android:id="@+id/nav_file_merge"
+            android:icon="@drawable/ic_merge"
+            android:title="@string/nav_file_merge" />
+        <item
+            android:id="@+id/nav_file_split"
+            android:icon="@drawable/ic_split"
+            android:title="@string/nav_file_split" />
+        <item
+            android:id="@+id/nav_file_rename"
+            android:icon="@drawable/ic_rename"
+            android:title="@string/nav_file_rename" />
+    </group>
+
+    <item android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/nav_share" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about"
+                android:title="@string/nav_about" />
+        </menu>
+    </item>
+
+</menu>
