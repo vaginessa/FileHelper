@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.util.List;
 
+import crixec.filehelper.function.browser.FileViewHolder;
 import crixec.filehelper.listener.OnFileItemClickListener;
 import crixec.filehelper.R;
 import crixec.filehelper.Utils;
@@ -47,12 +48,6 @@ public class FileAdapter extends RecyclerView.Adapter<FileViewHolder> {
                         @Override
                         public void onClick(View v) {
                             onFileItemClickListener.onFileItemClick(holder.getLayoutPosition());
-                        }
-                    });
-                    holder.itemVew.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            return onFileItemClickListener.onFileItemLongClick(holder.getLayoutPosition());
                         }
                     });
                 }

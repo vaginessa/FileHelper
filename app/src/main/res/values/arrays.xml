@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="single_click_operations">
+        <item>@string/open</item>
+        <item>@string/delete</item>
+        <item>@string/view</item>
+    </string-array>
+</resources>

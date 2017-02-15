@@ -1,9 +1,8 @@
 package crixec.filehelper.function.browser;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import crixec.filehelper.BaseFragment;
+import crixec.filehelper.function.fileinfo.FileInfoActivity;
 import crixec.filehelper.listener.OnFileItemClickListener;
 import crixec.filehelper.R;
 import crixec.filehelper.SettingHelper;
@@ -71,6 +69,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
         this.parentFile = parentFile;
     }
 
+
     @Override
     public void onFileItemClick(int position) {
         final File clickedFile = fileList.get(position);
@@ -79,13 +78,33 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
                 parentFile = clickedFile;
                 new FileListUpdater().execute(parentFile);
             } else {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(clickedFile.getName())
+                        .setItems(R.array.single_click_operations, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    // open
+                                } else if (which == 1) {
+                                    // delete
+                                    int msgRes = R.string.delete_succeed;
+                                    if (!Utils.delete(clickedFile)) {
+                                        msgRes = R.string.delete_failed;
+                                    } else {
+                                        new FileListUpdater().execute(parentFile);
+                                    }
+                                    getMainActivity().makeSnackBar(getString(msgRes), Snackbar.LENGTH_SHORT);
+                                } else if (which == 2) {
+                                    // view
+                                    Intent intent = new Intent(getMainActivity(), FileInfoActivity.class);
+                                    intent.putExtra("FILE", clickedFile.getPath());
+                                    startActivity(intent);
+                                }
+                            }
+                        })
+                        .show();
             }
         }
-    }
-
-    @Override
-    public boolean onFileItemLongClick(int position) {
-        return false;
     }
 
     @Override
@@ -116,10 +135,10 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
                 } else if (which == DialogInterface.BUTTON_POSITIVE) {
                     result = Utils.createFolder(new File(getParentFile(), str));
                 }
-                if(result){
+                if (result) {
                     getMainActivity().makeSnackBar(getString(R.string.create_successed), Snackbar.LENGTH_SHORT);
                     new FileListUpdater().execute(parentFile);
-                }else {
+                } else {
                     getMainActivity().makeSnackBar(getString(R.string.create_failed), Snackbar.LENGTH_SHORT);
                 }
             }

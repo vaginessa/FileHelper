@@ -6,6 +6,4 @@ package crixec.filehelper.listener;
 
 public interface OnFileItemClickListener {
    void onFileItemClick(int position);
-
-    boolean onFileItemLongClick(int position);
 }

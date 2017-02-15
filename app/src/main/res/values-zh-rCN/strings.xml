@@ -28,4 +28,24 @@
     <string name="create_successed">创建成功</string>
     <string name="file_content">文件内容</string>
     <string name="search_types">搜索类型</string>
+    <string name="view">查看</string>
+    <string name="delete">删除</string>
+    <string name="open">打开</string>
+    <string name="delete_failed">删除失败</string>
+    <string name="delete_succeed">删除成功</string>
+    <string name="action_exit">退出</string>
+    <string name="warning">Warning</string>
+    <string name="need_storage_permission">需要存储权限，不给不给不干活QAQ</string>
+    <string name="file_info">文件信息</string>
+    <string name="file_name">文件名称</string>
+    <string name="file_path">文件路径</string>
+    <string name="is_symlink">链接文件</string>
+    <string name="real_path">真实路径</string>
+    <string name="file_size">文件大小</string>
+    <string name="computing">计算中</string>
+    <string name="readable">可读</string>
+    <string name="writeable">可写</string>
+    <string name="executeable">可执行</string>
+    <string name="last_modified">修改时间</string>
+    <string name="copied">已复制</string>
 </resources>
