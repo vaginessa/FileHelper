@@ -44,8 +44,12 @@
     <string name="file_size">文件大小</string>
     <string name="computing">计算中</string>
     <string name="readable">可读</string>
-    <string name="writeable">可写</string>
-    <string name="executeable">可执行</string>
+    <string name="writable">可写</string>
+    <string name="executable">可执行</string>
     <string name="last_modified">修改时间</string>
     <string name="copied">已复制</string>
+    <string name="action_goto">跳转到指定路径</string>
+    <string name="target_path">目标路径</string>
+    <string name="go">跳转</string>
+    <string name="not_exist">不存在：</string>
 </resources>

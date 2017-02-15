@@ -58,7 +58,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         parentFile = SettingHelper.getDefautlStartStorage();
-        new FileListUpdater().execute(parentFile);
+        refresh();
     }
 
     public File getParentFile() {
@@ -68,7 +68,9 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
     public void setParentFile(File parentFile) {
         this.parentFile = parentFile;
     }
-
+    public void refresh(){
+        new FileListUpdater().execute(parentFile);
+    }
 
     @Override
     public void onFileItemClick(int position) {
@@ -76,7 +78,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
         if (clickedFile != null) {
             if (clickedFile.isDirectory()) {
                 parentFile = clickedFile;
-                new FileListUpdater().execute(parentFile);
+                refresh();
             } else {
                 new AlertDialog.Builder(getContext())
                         .setTitle(clickedFile.getName())
@@ -91,7 +93,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
                                     if (!Utils.delete(clickedFile)) {
                                         msgRes = R.string.delete_failed;
                                     } else {
-                                        new FileListUpdater().execute(parentFile);
+                                        refresh();
                                     }
                                     getMainActivity().makeSnackBar(getString(msgRes), Snackbar.LENGTH_SHORT);
                                 } else if (which == 2) {
@@ -113,7 +115,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
             return super.onBack();
         } else {
             parentFile = parentFile.getParentFile();
-            new FileListUpdater().execute(parentFile);
+            refresh();
             return true;
         }
     }
@@ -121,6 +123,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
     @Override
     public void onClick(View v) {
         final AppCompatEditText editText = new AppCompatEditText(getContext());
+        editText.setHint(R.string.file_name);
         DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -137,7 +140,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
                 }
                 if (result) {
                     getMainActivity().makeSnackBar(getString(R.string.create_successed), Snackbar.LENGTH_SHORT);
-                    new FileListUpdater().execute(parentFile);
+                    refresh();
                 } else {
                     getMainActivity().makeSnackBar(getString(R.string.create_failed), Snackbar.LENGTH_SHORT);
                 }

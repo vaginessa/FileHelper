@@ -15,12 +15,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private AppCompatTextView subTitle;
     private FloatingActionButton fab;
     private Toolbar toolbar;
+    private Menu menu;
 
     static class Section {
         public static int FRAGMENT_BROWSER = 0;
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity
                             finish();
                         }
                     }).show();
-        }else {
+        } else {
             Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity
             getFAB().setVisibility(View.VISIBLE);
         }
         setTitle(fragments.get(index).getTitle());
+        invalidateOptionsMenu();
     }
 
     public void showSubTitle() {
@@ -171,6 +176,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        if (CURRENT_INDEX == 0) {
+            menu.findItem(R.id.action_goto).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_goto).setVisible(false);
+        }
         return true;
     }
 
@@ -178,6 +188,34 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_exit) {
             finish();
+        } else if (item.getItemId() == R.id.action_goto) {
+            final AppCompatEditText editText = new AppCompatEditText(this);
+            editText.setHint(R.string.target_path);
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.action_goto)
+                    .setView(editText)
+                    .setPositiveButton(R.string.go, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            File file;
+                            String path = editText.getText().toString();
+                            if (!TextUtils.isEmpty(path)) {
+                                BrowserFragment browserFragment = ((BrowserFragment) fragments.get(0));
+                                if (path.toCharArray()[0] == '/') {
+                                    file = new File(path);
+                                } else {
+                                    file = new File(browserFragment.getParentFile(), path);
+                                }
+                                if (!file.exists()) {
+                                    makeSnackBar(getString(R.string.not_exist) + file.getPath(), Snackbar.LENGTH_SHORT);
+                                } else {
+                                    browserFragment.setParentFile(file);
+                                    browserFragment.refresh();
+                                }
+                            }
+                        }
+                    })
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }

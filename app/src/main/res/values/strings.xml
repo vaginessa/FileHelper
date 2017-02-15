@@ -49,8 +49,12 @@
     <string name="computing">Computing</string>
     <string name="file_sha">SHA</string>
     <string name="readable">Readable</string>
-    <string name="writeable">Writeable</string>
-    <string name="executeable">Executable</string>
+    <string name="writable">Writable</string>
+    <string name="executable">Executable</string>
     <string name="last_modified">Last Modified</string>
     <string name="copied">Copied</string>
+    <string name="action_goto">Goto</string>
+    <string name="target_path">Target Path</string>
+    <string name="go">GO</string>
+    <string name="not_exist">Not Exist:</string>
 </resources>

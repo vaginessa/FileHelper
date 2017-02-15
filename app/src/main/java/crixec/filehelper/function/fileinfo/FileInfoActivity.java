@@ -65,8 +65,8 @@ public class FileInfoActivity extends AppCompatActivity implements OnFileItemCli
         info.add(new InfoBean(getString(R.string.last_modified), Utils.computeUseableTime(file.lastModified())));
         info.add(new InfoBean(getString(R.string.file_size), Utils.computeUseableFileSize(file)));
         info.add(new InfoBean(getString(R.string.readable), String.valueOf(file.canRead())));
-        info.add(new InfoBean(getString(R.string.writeable), String.valueOf(file.canWrite())));
-        info.add(new InfoBean(getString(R.string.executeable), String.valueOf(file.canExecute())));
+        info.add(new InfoBean(getString(R.string.writable), String.valueOf(file.canWrite())));
+        info.add(new InfoBean(getString(R.string.executable), String.valueOf(file.canExecute())));
         info.add(new InfoBean(getString(R.string.file_md5), getString(R.string.computing)));
         new AlgorithmComputer(file, info.size() - 1, "MD5").execute();
         info.add(new InfoBean(getString(R.string.file_sha), getString(R.string.computing)));
