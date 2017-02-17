@@ -1,26 +1,44 @@
 package crixec.filehelper.function.search;
 
+import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.RadioGroup;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import crixec.filehelper.BaseFragment;
 import crixec.filehelper.R;
+import crixec.filehelper.SettingHelper;
 import crixec.filehelper.Utils;
+import crixec.filehelper.function.browser.BrowserFragment;
 
 /**
  * Created by crixec on 17-2-11.
  */
 
-public class FileSearchFragment extends BaseFragment implements TextWatcher {
+public class FileSearchFragment extends BaseFragment implements TextWatcher, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private TextInputLayout startPathLayout;
     private TextInputLayout fileNameLayout;
     private AppCompatButton startButton;
     private AppCompatButton stopButton;
+    private RadioGroup radioGroup;
+    private ListView listView;
+    private ArrayAdapter adapter;
+    private boolean isSearchable = false;
+    private List<String> results = new ArrayList<>();
 
     public static FileSearchFragment newInstance(AppCompatActivity activity, int titleRes, int contentViewRes) {
         FileSearchFragment fragment = new FileSearchFragment();
@@ -37,9 +55,18 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher {
         fileNameLayout = (TextInputLayout) findViewById(R.id.searchContent);
         startButton = (AppCompatButton) findViewById(R.id.startSearchButton);
         stopButton = (AppCompatButton) findViewById(R.id.stopSearchButton);
+        radioGroup = (RadioGroup) findViewById(R.id.rgSearchType);
+        listView = (ListView) findViewById(R.id.searchResultList);
         fileNameLayout.getEditText().addTextChangedListener(this);
         startPathLayout.getEditText().addTextChangedListener(this);
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, results);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+        startPathLayout.getEditText().setText(SettingHelper.getDefautlStartStorage().getPath());
     }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -49,17 +76,17 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher {
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String path = startPathLayout.getEditText().getText().toString();
         String fileName = fileNameLayout.getEditText().getText().toString();
-        if(Utils.isTextEmpty(path)){
+        if (Utils.isTextEmpty(path)) {
             startPathLayout.setErrorEnabled(true);
             startPathLayout.setError(getString(R.string.path_cannot_be_empty));
-        }else {
+        } else {
             startPathLayout.setErrorEnabled(false);
             startPathLayout.setError(null);
         }
-        if(Utils.isTextEmpty(fileName)){
+        if (Utils.isTextEmpty(fileName)) {
             fileNameLayout.setErrorEnabled(true);
             fileNameLayout.setError(getString(R.string.file_name_cannot_be_empty));
-        }else {
+        } else {
             fileNameLayout.setErrorEnabled(false);
             fileNameLayout.setError(null);
         }
@@ -69,5 +96,111 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.stopSearchButton) {
+            synchronized (this) {
+                isSearchable = false;
+                this.notifyAll();
+            }
+        } else if (v.getId() == R.id.startSearchButton) {
+            if (!isSearchable) {
+                new Searcher(startPathLayout.getEditText().getText().toString()).execute(getSearchFilter());
+            }
+        }
+    }
+
+    private AbsSearchFilter getSearchFilter() {
+        if (radioGroup != null) {
+            int id = radioGroup.getCheckedRadioButtonId();
+            if (id == R.id.rg_file) {
+                return new SearchFileFilter(fileNameLayout.getEditText().getText().toString());
+            } else if (id == R.id.rg_folder) {
+                return new SearchFolderFilter(fileNameLayout.getEditText().getText().toString());
+            } else if (id == R.id.rg_file_content) {
+                return new SearchContentFilter(fileNameLayout.getEditText().getText().toString());
+            }
+        }
+        return new AbsSearchFilter() {
+            @Override
+            public boolean onFilter(File file) {
+                return false;
+            }
+        };
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        File newFile = new File(results.get(position));
+        ((BrowserFragment) getMainActivity().getFragment(0)).setParentFile(newFile.isFile() ? newFile.getParentFile() : newFile);
+        ((BrowserFragment) getMainActivity().getFragment(0)).refresh();
+        getMainActivity().switchFragment(0);
+    }
+
+    class Searcher extends AsyncTask<AbsSearchFilter, String, Void> {
+        private String startPath;
+
+        public Searcher(String startPath) {
+            this.startPath = startPath;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            results.clear();
+            adapter.notifyDataSetChanged();
+            isSearchable = true;
+            startButton.setEnabled(false);
+            stopButton.setEnabled(true);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            isSearchable = false;
+            startButton.setEnabled(true);
+            stopButton.setEnabled(false);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            isSearchable = false;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            Log.i("Search", "Obtained:" + values[0]);
+            results.add(values[0]);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(AbsSearchFilter... params) {
+            searchInPath(startPath, params[0]);
+            return null;
+        }
+
+        public void searchInPath(String path, AbsSearchFilter filter) {
+            File dir = new File(path);
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (int i = 0; i < files.length; i++) {
+                    File file = files[i];
+                    Log.i("Search", "Checking:" + file.getPath());
+                    if (!isSearchable) return;
+                    boolean b = filter.onFilter(file);
+                    if (b) {
+                        publishProgress(file.getAbsolutePath());
+                    }
+                    if (file.isDirectory()) {
+                        searchInPath(file.getAbsolutePath(), filter);
+                    }
+                }
+            }
+        }
     }
 }

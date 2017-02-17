@@ -1,8 +1,12 @@
 package crixec.filehelper;
 
+import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
@@ -23,7 +27,8 @@ public class Utils {
             files = new File[]{};
         return files;
     }
-    public static String computeDigest(File file, String type){
+
+    public static String computeDigest(File file, String type) {
         if (!file.isFile()) {
             return null;
         }
@@ -81,13 +86,16 @@ public class Utils {
     public static String computeReadableTime(long time) {
         return computeTime(time, "HH:mm MM-dd-yyyy");
     }
+
     public static String computeTime(long time, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         return formatter.format(new Date((time)));
     }
+
     public static String computeUseableTime(long time) {
         return computeTime(time, "yyyy-MM-dd HH:mm:ss");
     }
+
     public static boolean isTextEmpty(CharSequence text) {
         if (text == null || text.length() == 0 || text.toString().equals("") || text.toString().trim().equals("")) {
             return true;
@@ -159,5 +167,45 @@ public class Utils {
             }
         }
         return file.isDirectory();
+    }
+    public static StringBuilder readFile(String filePath) {
+        return readFile(filePath, "UTF-8");
+    }
+    public static StringBuilder readFile(File file) {
+        return readFile(file.getPath(), "UTF-8");
+    }
+    public static StringBuilder readFile(String filePath, String charsetName) {
+        File file = new File(filePath);
+        StringBuilder fileContent = new StringBuilder("");
+        if (file == null || !file.isFile()) {
+            return null;
+        }
+
+        BufferedReader reader = null;
+        try {
+            InputStreamReader is = new InputStreamReader(new FileInputStream(file), charsetName);
+            reader = new BufferedReader(is);
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                if (!fileContent.toString().equals("")) {
+                    fileContent.append("\r\n");
+                }
+                fileContent.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            close(reader);
+        }
+        return fileContent;
+    }
+
+    public static void close(Closeable closeable) {
+        if (closeable != null)
+            try {
+                closeable.close();
+            } catch (IOException e) {
+
+            }
     }
 }

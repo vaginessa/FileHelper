@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     private AppCompatTextView subTitle;
     private FloatingActionButton fab;
     private Toolbar toolbar;
-    private Menu menu;
+    private NavigationView navigationView;
 
     static class Section {
         public static int FRAGMENT_BROWSER = 0;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
         // add fragments
@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
         }
+    }
+
+    public BaseFragment getFragment(int position) {
+        return fragments.get(position);
     }
 
     @Override
@@ -138,6 +142,7 @@ public class MainActivity extends AppCompatActivity
             getFAB().setVisibility(View.VISIBLE);
         }
         setTitle(fragments.get(index).getTitle());
+        navigationView.getMenu().getItem(index).setChecked(true);
         invalidateOptionsMenu();
     }
 
@@ -206,7 +211,7 @@ public class MainActivity extends AppCompatActivity
                                 } else {
                                     file = new File(browserFragment.getParentFile(), path);
                                 }
-                                if (!file.exists()) {
+                                if (!file.exists() || file.isFile()) {
                                     makeSnackBar(getString(R.string.not_exist) + file.getPath(), Snackbar.LENGTH_SHORT);
                                 } else {
                                     browserFragment.setParentFile(file);
@@ -276,6 +281,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void makeSnackBar(CharSequence text, int duration) {
-        Snackbar.make(toolbar.getRootView(), text, duration).show();
+        Snackbar.make(fab, text, duration).show();
     }
 }
