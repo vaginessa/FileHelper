@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -90,7 +89,7 @@ public class SearchFragment extends BaseFragment implements TextWatcher, View.On
         }
         if (Utils.isTextEmpty(fileName)) {
             fileNameLayout.setErrorEnabled(true);
-            fileNameLayout.setError(getString(R.string.file_name_cannot_be_empty));
+            fileNameLayout.setError(getString(R.string.search_content_cannot_be_empty));
         } else {
             fileNameLayout.setErrorEnabled(false);
             fileNameLayout.setError(null);

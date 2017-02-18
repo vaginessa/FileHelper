@@ -18,7 +18,7 @@
     <string name="input_start_path">起始路径</string>
     <string name="input_search_content">搜索内容</string>
     <string name="search_result">搜索结果</string>
-    <string name="file_name_cannot_be_empty">文件名不能为空</string>
+    <string name="search_content_cannot_be_empty">文件名不能为空</string>
     <string name="path_cannot_be_empty">路径不能为空</string>
     <string name="create">创建</string>
     <string name="file">文件</string>
@@ -53,4 +53,12 @@
     <string name="go">跳转</string>
     <string name="not_exist">不存在：</string>
     <string name="wildcard_match">通配</string>
+    <string name="contain_files">操作的文件夹或文件</string>
+    <string name="replace_content">替换内容</string>
+    <string name="start_replace">Start Replace</string>
+    <string name="stop_replace">Stop Replace</string>
+    <string name="add_new_paths_or_files">Add new paths or files</string>
+    <string name="add">Add</string>
+    <string name="content_cannot_be_empty">Content cannot be empty</string>
+    <string name="add_failed">Add failed</string>
 </resources>

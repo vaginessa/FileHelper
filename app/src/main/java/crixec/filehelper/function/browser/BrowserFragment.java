@@ -42,6 +42,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
         fragment.setActivity(activity);
         fragment.setContentViewRes(contentViewRes);
         fragment.setTitleRes(titleRes);
+        fragment.setShowFab(true);
         return fragment;
     }
 

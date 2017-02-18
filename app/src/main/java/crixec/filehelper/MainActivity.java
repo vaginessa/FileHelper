@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import crixec.filehelper.function.FileCompareFragment;
-import crixec.filehelper.function.FileContentReplaceFragment;
+import crixec.filehelper.function.replace.ContentReplaceFragment;
 import crixec.filehelper.function.FileMergeFragment;
 import crixec.filehelper.function.FileRenameFragment;
 import crixec.filehelper.function.FileSplitFragment;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         // add fragments
         fragments.add(BrowserFragment.newInstance(this, R.string.nav_file_browser, R.layout.fragment_browser));
         fragments.add(SearchFragment.newInstance(this, R.string.nav_file_search, R.layout.fragment_search));
-        fragments.add(FileContentReplaceFragment.newInstance(this, R.string.nav_file_content_replace, R.layout.fragment_content_replace));
+        fragments.add(ContentReplaceFragment.newInstance(this, R.string.nav_file_content_replace, R.layout.fragment_content_replace));
         fragments.add(FileSuffixReplaceFragment.newInstance(this, R.string.nav_file_suffix_replace, R.layout.fragment_suffix_replace));
         fragments.add(FileCompareFragment.newInstance(this, R.string.nav_file_compare, R.layout.fragment_file_compare));
         fragments.add(FileMergeFragment.newInstance(this, R.string.nav_file_merge, R.layout.fragment_file_merge));
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().add(R.id.contentLayout, fragment).hide(fragment).commit();
         }
         switchFragment(0);
-        fab.setOnClickListener((BrowserFragment) fragments.get(0));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -135,11 +134,15 @@ public class MainActivity extends AppCompatActivity
         }
         if (CURRENT_INDEX != 0) {
             dismissSubTitle();
-            getFAB().setVisibility(View.GONE);
         } else {
             showSubTitle();
-            getFAB().setVisibility(View.VISIBLE);
         }
+        if(fragments.get(index).isShowFab()){
+            getFAB().setVisibility(View.VISIBLE);
+        }else {
+            getFAB().setVisibility(View.GONE);
+        }
+        fab.setOnClickListener(fragments.get(index));
         setTitle(fragments.get(index).getTitle());
         navigationView.getMenu().getItem(index).setChecked(true);
         invalidateOptionsMenu();

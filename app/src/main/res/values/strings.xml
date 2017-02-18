@@ -22,7 +22,7 @@
     <string name="input_start_path">Start Path</string>
     <string name="input_search_content">Search Content</string>
     <string name="search_result">Search Result</string>
-    <string name="file_name_cannot_be_empty">File name cannot be empty</string>
+    <string name="search_content_cannot_be_empty">File name cannot be empty</string>
     <string name="path_cannot_be_empty">Path cannot be empty</string>
     <string name="create">Create</string>
     <string name="file">File</string>
@@ -58,4 +58,12 @@
     <string name="go">GO</string>
     <string name="not_exist">Not Exist:</string>
     <string name="wildcard_match">Wildcard Match</string>
+    <string name="contain_files">Contains folders or files</string>
+    <string name="replace_content">Replace Content</string>
+    <string name="start_replace">Start Replace</string>
+    <string name="stop_replace">Stop Replace</string>
+    <string name="add_new_paths_or_files">Add new paths or files</string>
+    <string name="add">Add</string>
+    <string name="content_cannot_be_empty">Content cannot be empty</string>
+    <string name="add_failed">Add failed</string>
 </resources>

@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
@@ -168,12 +172,15 @@ public class Utils {
         }
         return file.isDirectory();
     }
+
     public static StringBuilder readFile(String filePath) {
         return readFile(filePath, "UTF-8");
     }
+
     public static StringBuilder readFile(File file) {
         return readFile(file.getPath(), "UTF-8");
     }
+
     public static StringBuilder readFile(String filePath, String charsetName) {
         File file = new File(filePath);
         StringBuilder fileContent = new StringBuilder("");
@@ -207,5 +214,23 @@ public class Utils {
             } catch (IOException e) {
 
             }
+    }
+    public static void writeFile(File file, String content) {
+        writeFile(file.getPath(), content, false);
+    }
+    public static void writeFile(String filePath, String content, boolean append) {
+        if (isTextEmpty(content)) {
+            return;
+        }
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(filePath, append);
+            fileWriter.write(content);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            Utils.close(fileWriter);
+        }
     }
 }

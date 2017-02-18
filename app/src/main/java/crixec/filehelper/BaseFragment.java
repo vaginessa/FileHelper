@@ -15,11 +15,12 @@ import crixec.filehelper.listener.OnBackPress;
  * Created by crixec on 17-2-11.
  */
 
-public class BaseFragment extends Fragment implements OnBackPress {
+public class BaseFragment extends Fragment implements OnBackPress, View.OnClickListener {
     private AppCompatActivity activity;
     private View contentView;
     private int contentViewRes;
     private int titleRes;
+    private boolean showFab = false;
 
     public static BaseFragment newInstance(AppCompatActivity activity, int titleRes, int contentViewRes) {
         BaseFragment fragment = new BaseFragment();
@@ -82,4 +83,16 @@ public class BaseFragment extends Fragment implements OnBackPress {
         return false;
     }
 
+    public boolean isShowFab() {
+        return showFab;
+    }
+
+    public void setShowFab(boolean showFab) {
+        this.showFab = showFab;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }
