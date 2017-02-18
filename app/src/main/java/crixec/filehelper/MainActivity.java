@@ -35,7 +35,6 @@ import crixec.filehelper.function.FileSplitFragment;
 import crixec.filehelper.function.FileSuffixReplaceFragment;
 import crixec.filehelper.function.browser.BrowserFragment;
 import crixec.filehelper.function.search.FileSearchFragment;
-import crixec.filehelper.listener.AboutFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
