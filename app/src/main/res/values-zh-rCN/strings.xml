@@ -55,10 +55,10 @@
     <string name="wildcard_match">通配</string>
     <string name="contain_files">操作的文件夹或文件</string>
     <string name="replace_content">替换内容</string>
-    <string name="start_replace">Start Replace</string>
-    <string name="stop_replace">Stop Replace</string>
-    <string name="add_new_paths_or_files">Add new paths or files</string>
-    <string name="add">Add</string>
-    <string name="content_cannot_be_empty">Content cannot be empty</string>
-    <string name="add_failed">Add failed</string>
+    <string name="start_replace">开始替换</string>
+    <string name="stop_replace">停止替换</string>
+    <string name="add_new_paths_or_files">添加新路径或文件</string>
+    <string name="add">添加</string>
+    <string name="content_cannot_be_empty">内容不能为空</string>
+    <string name="add_failed">添加失败</string>
 </resources>
