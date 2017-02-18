@@ -2,6 +2,7 @@ package crixec.filehelper.function.search;
 
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -9,7 +10,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -29,7 +29,7 @@ import crixec.filehelper.function.browser.BrowserFragment;
  * Created by crixec on 17-2-11.
  */
 
-public class FileSearchFragment extends BaseFragment implements TextWatcher, View.OnClickListener, AdapterView.OnItemClickListener {
+public class SearchFragment extends BaseFragment implements TextWatcher, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private TextInputLayout startPathLayout;
     private TextInputLayout fileNameLayout;
@@ -38,11 +38,12 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
     private RadioGroup radioGroup;
     private ArrayAdapter adapter;
     private AppCompatCheckBox checkBox;
+    private ContentLoadingProgressBar progressBar;
     private boolean isSearchable = false;
     private List<String> results = new ArrayList<>();
 
-    public static FileSearchFragment newInstance(AppCompatActivity activity, int titleRes, int contentViewRes) {
-        FileSearchFragment fragment = new FileSearchFragment();
+    public static SearchFragment newInstance(AppCompatActivity activity, int titleRes, int contentViewRes) {
+        SearchFragment fragment = new SearchFragment();
         fragment.setActivity(activity);
         fragment.setContentViewRes(contentViewRes);
         fragment.setTitleRes(titleRes);
@@ -59,14 +60,16 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
         radioGroup = (RadioGroup) findViewById(R.id.rgSearchType);
         ListView listView = (ListView) findViewById(R.id.searchResultList);
         checkBox = (AppCompatCheckBox) findViewById(R.id.cbWildcardMatch);
+        progressBar = (ContentLoadingProgressBar) findViewById(R.id.progressBar);
         fileNameLayout.getEditText().addTextChangedListener(this);
         startPathLayout.getEditText().addTextChangedListener(this);
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
-        adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, results);
+        adapter = new ArrayAdapter(getActivity(), R.layout.layout_simple_result, results);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         startPathLayout.getEditText().setText(SettingHelper.getDefautlStartStorage().getPath());
+        progressBar.setIndeterminate(false);
     }
 
     @Override
@@ -159,6 +162,7 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
             startButton.setEnabled(false);
             stopButton.setEnabled(true);
             isWildcardable = checkBox.isChecked();
+            progressBar.setIndeterminate(true);
         }
 
         @Override
@@ -167,6 +171,7 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
             isSearchable = false;
             startButton.setEnabled(true);
             stopButton.setEnabled(false);
+            progressBar.setIndeterminate(false);
         }
 
         @Override
@@ -178,7 +183,6 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Log.i("Search", "Obtained:" + values[0]);
             results.add(values[0]);
             adapter.notifyDataSetChanged();
         }
@@ -196,7 +200,6 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
                     File file = files[i];
-                    Log.i("Search", "Checking:" + file.getPath());
                     if (!isSearchable) return;
                     boolean b = filter.onFilter(file);
                     if (b) {

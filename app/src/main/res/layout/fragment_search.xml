@@ -94,11 +94,11 @@
     </RadioGroup>
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/wildcard_match"
-        android:checked="false"
         android:id="@+id/cbWildcardMatch"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/wildcard_match" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -106,10 +106,12 @@
         android:layout_marginTop="10dp"
         android:text="@string/search_result" />
 
-    <View
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent" />
+        android:layout_height="wrap_content"
+        android:max="100" />
 
     <ListView
         android:id="@+id/searchResultList"

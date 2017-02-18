@@ -34,7 +34,7 @@ import crixec.filehelper.function.FileRenameFragment;
 import crixec.filehelper.function.FileSplitFragment;
 import crixec.filehelper.function.FileSuffixReplaceFragment;
 import crixec.filehelper.function.browser.BrowserFragment;
-import crixec.filehelper.function.search.FileSearchFragment;
+import crixec.filehelper.function.search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
         // add fragments
         fragments.add(BrowserFragment.newInstance(this, R.string.nav_file_browser, R.layout.fragment_browser));
-        fragments.add(FileSearchFragment.newInstance(this, R.string.nav_file_search, R.layout.fragment_search));
+        fragments.add(SearchFragment.newInstance(this, R.string.nav_file_search, R.layout.fragment_search));
         fragments.add(FileContentReplaceFragment.newInstance(this, R.string.nav_file_content_replace, R.layout.fragment_content_replace));
         fragments.add(FileSuffixReplaceFragment.newInstance(this, R.string.nav_file_suffix_replace, R.layout.fragment_suffix_replace));
         fragments.add(FileCompareFragment.newInstance(this, R.string.nav_file_compare, R.layout.fragment_file_compare));
