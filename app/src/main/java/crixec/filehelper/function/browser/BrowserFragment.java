@@ -139,7 +139,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
                     result = Utils.createFolder(new File(getParentFile(), str));
                 }
                 if (result) {
-                    getMainActivity().makeSnackBar(getString(R.string.create_successed), Snackbar.LENGTH_SHORT);
+                    getMainActivity().makeSnackBar(getString(R.string.create_succeed), Snackbar.LENGTH_SHORT);
                     refresh();
                 } else {
                     getMainActivity().makeSnackBar(getString(R.string.create_failed), Snackbar.LENGTH_SHORT);

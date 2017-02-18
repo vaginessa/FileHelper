@@ -19,7 +19,7 @@ public class SearchFileFilter extends AbsSearchFilter {
     public boolean onFilter(File file) {
         Log.i("SearchFilter", file.getPath());
         if (file != null && file.exists()) {
-            return file.isFile() && file.getName().equals(name);
+            return file.isFile() && compare(file.getName(), name);
         }
         return false;
     }

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,8 +36,8 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
     private AppCompatButton startButton;
     private AppCompatButton stopButton;
     private RadioGroup radioGroup;
-    private ListView listView;
     private ArrayAdapter adapter;
+    private AppCompatCheckBox checkBox;
     private boolean isSearchable = false;
     private List<String> results = new ArrayList<>();
 
@@ -56,7 +57,8 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
         startButton = (AppCompatButton) findViewById(R.id.startSearchButton);
         stopButton = (AppCompatButton) findViewById(R.id.stopSearchButton);
         radioGroup = (RadioGroup) findViewById(R.id.rgSearchType);
-        listView = (ListView) findViewById(R.id.searchResultList);
+        ListView listView = (ListView) findViewById(R.id.searchResultList);
+        checkBox = (AppCompatCheckBox) findViewById(R.id.cbWildcardMatch);
         fileNameLayout.getEditText().addTextChangedListener(this);
         startPathLayout.getEditText().addTextChangedListener(this);
         startButton.setOnClickListener(this);
@@ -141,6 +143,8 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
 
     class Searcher extends AsyncTask<AbsSearchFilter, String, Void> {
         private String startPath;
+        private boolean isWildcardable = false;
+
 
         public Searcher(String startPath) {
             this.startPath = startPath;
@@ -154,6 +158,7 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
             isSearchable = true;
             startButton.setEnabled(false);
             stopButton.setEnabled(true);
+            isWildcardable = checkBox.isChecked();
         }
 
         @Override
@@ -180,6 +185,7 @@ public class FileSearchFragment extends BaseFragment implements TextWatcher, Vie
 
         @Override
         protected Void doInBackground(AbsSearchFilter... params) {
+            params[0].setWildcardable(isWildcardable);
             searchInPath(startPath, params[0]);
             return null;
         }

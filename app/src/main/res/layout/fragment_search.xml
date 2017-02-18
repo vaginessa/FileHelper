@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|start"
         android:layout_marginTop="10dp"
-        android:hint="@string/input_search_file">
+        android:hint="@string/input_search_content">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
@@ -63,8 +63,9 @@
         android:text="@string/search_types" />
 
     <RadioGroup
+        android:id="@+id/rgSearchType"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"        android:id="@+id/rgSearchType"
+        android:layout_height="wrap_content"
 
         android:orientation="horizontal">
 
@@ -92,6 +93,12 @@
 
     </RadioGroup>
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:text="@string/wildcard_match"
+        android:checked="false"
+        android:id="@+id/cbWildcardMatch"
+        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"

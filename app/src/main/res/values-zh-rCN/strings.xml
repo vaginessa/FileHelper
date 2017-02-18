@@ -16,7 +16,7 @@
     <string name="start_search">开始搜索</string>
     <string name="stop_search">停止搜索</string>
     <string name="input_start_path">起始路径</string>
-    <string name="input_search_file">搜索名称</string>
+    <string name="input_search_content">搜索内容</string>
     <string name="search_result">搜索结果</string>
     <string name="file_name_cannot_be_empty">文件名不能为空</string>
     <string name="path_cannot_be_empty">路径不能为空</string>
@@ -52,4 +52,5 @@
     <string name="target_path">目标路径</string>
     <string name="go">跳转</string>
     <string name="not_exist">不存在：</string>
+    <string name="wildcard_match">通配</string>
 </resources>

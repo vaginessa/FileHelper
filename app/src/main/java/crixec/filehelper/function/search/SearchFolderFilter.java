@@ -16,7 +16,7 @@ public class SearchFolderFilter extends AbsSearchFilter {
     @Override
     public boolean onFilter(File file) {
         if (file != null && file.exists()) {
-            return file.isDirectory() && file.getName().equals(name);
+            return file.isDirectory() && compare(file.getName(), name);
         }
         return false;
     }

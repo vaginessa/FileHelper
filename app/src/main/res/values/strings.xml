@@ -20,7 +20,7 @@
     <string name="start_search">Start Search</string>
     <string name="stop_search">Stop Search</string>
     <string name="input_start_path">Start Path</string>
-    <string name="input_search_file">Search File Name</string>
+    <string name="input_search_content">Search Content</string>
     <string name="search_result">Search Result</string>
     <string name="file_name_cannot_be_empty">File name cannot be empty</string>
     <string name="path_cannot_be_empty">Path cannot be empty</string>
@@ -28,7 +28,7 @@
     <string name="file">File</string>
     <string name="folder">Folder</string>
     <string name="name_cannot_be_empty">Name cannot be empty</string>
-    <string name="create_successed">Create Successed</string>
+    <string name="create_succeed">Create Succeed</string>
     <string name="create_failed">Create Failed</string>
     <string name="file_content">File Content</string>
     <string name="search_types">Search Types</string>
@@ -57,4 +57,5 @@
     <string name="target_path">Target Path</string>
     <string name="go">GO</string>
     <string name="not_exist">Not Exist:</string>
+    <string name="wildcard_match">Wildcard Match</string>
 </resources>
