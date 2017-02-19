@@ -1,1 +1,1 @@
-include ':app', ':circleimageview', ':markdownview'
+include ':app', ':circleimageview', ':markdownview', ':filepicker'

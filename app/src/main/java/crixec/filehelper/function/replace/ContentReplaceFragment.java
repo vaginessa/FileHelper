@@ -16,8 +16,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.view.FilePickerDialog;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import crixec.filehelper.BaseFragment;
@@ -88,7 +92,8 @@ public class ContentReplaceFragment extends BaseFragment implements TextWatcher,
         }
         refreshButtons();
     }
-    private void refreshButtons(){
+
+    private void refreshButtons() {
         startButton.setEnabled(targets.size() > 0 && !(searchContentLayout.isErrorEnabled() || replaceContentLayout.isErrorEnabled()));
     }
 
@@ -109,33 +114,44 @@ public class ContentReplaceFragment extends BaseFragment implements TextWatcher,
     public void onClick(View v) {
         super.onClick(v);
         if (v.getId() == R.id.fab) {
-            final AppCompatEditText editText = new AppCompatEditText(getContext());
-            editText.setHint(R.string.add_new_paths_or_files);
-            DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            FilePickerDialog dialog = getMainActivity().createMultiFilePickerDialog();
+            dialog.setTitle(R.string.add_new_paths_or_files);
+            dialog.setDialogSelectionListener(new DialogSelectionListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String str = editText.getText().toString();
-                    if (Utils.isTextEmpty(str)) {
-                        getMainActivity().makeSnackBar(getString(R.string.content_cannot_be_empty), Snackbar.LENGTH_SHORT);
-                        return;
-                    }
-                    boolean result = new File(str).exists();
-                    if (!result) {
-                        getMainActivity().makeSnackBar(getString(R.string.add_failed), Snackbar.LENGTH_SHORT);
-                    }else {
-                        targets.add(str);
-                        adapter.notifyDataSetChanged();
-                        refreshButtons();
-                    }
+                public void onSelectedFilePaths(String[] files) {
+                    Collections.addAll(targets, files);
+                    adapter.notifyDataSetChanged();
+                    refreshButtons();
                 }
-            };
-            editText.setText(SettingHelper.getDefautlStartStorage().getPath());
-            new AlertDialog.Builder(getContext())
-                    .setView(editText)
-                    .setTitle(R.string.add)
-                    .setNegativeButton(R.string.add, onClickListener)
-                    .setCancelable(true)
-                    .show();
+            });
+            dialog.show();
+//            final AppCompatEditText editText = new AppCompatEditText(getContext());
+//            editText.setHint(R.string.add_new_paths_or_files);
+//            DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    String str = editText.getText().toString();
+//                    if (Utils.isTextEmpty(str)) {
+//                        getMainActivity().makeSnackBar(getString(R.string.content_cannot_be_empty), Snackbar.LENGTH_SHORT);
+//                        return;
+//                    }
+//                    boolean result = new File(str).exists();
+//                    if (!result) {
+//                        getMainActivity().makeSnackBar(getString(R.string.add_failed), Snackbar.LENGTH_SHORT);
+//                    }else {
+//                        targets.add(str);
+//                        adapter.notifyDataSetChanged();
+//                        refreshButtons();
+//                    }
+//                }
+//            };
+//            editText.setText(SettingHelper.getDefautlStartStorage().getPath());
+//            new AlertDialog.Builder(getContext())
+//                    .setView(editText)
+//                    .setTitle(R.string.add)
+//                    .setNegativeButton(R.string.add, onClickListener)
+//                    .setCancelable(true)
+//                    .show();
         } else if (v.getId() == R.id.stopReplaceButton) {
             synchronized (this) {
                 isReplaceable = false;

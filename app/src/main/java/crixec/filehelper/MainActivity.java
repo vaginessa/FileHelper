@@ -23,6 +23,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +128,30 @@ public class MainActivity extends AppCompatActivity
         return fab;
     }
 
+    public FilePickerDialog createFilePickerDialog(DialogProperties dialogProperties) {
+        return new FilePickerDialog(this, dialogProperties);
+    }
+    public FilePickerDialog createSingleFilePickerDialog() {
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        properties.root = new File("/");
+        properties.error_dir = new File("/");
+        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.extensions = null;
+        return createFilePickerDialog(properties);
+    }
+    public FilePickerDialog createMultiFilePickerDialog() {
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.MULTI_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        properties.root = new File("/");
+        properties.error_dir = new File("/");
+        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.extensions = null;
+        return createFilePickerDialog(properties);
+    }
+
     public void switchFragment(int index) {
         if (index < fragments.size()) {
             getSupportFragmentManager().beginTransaction().hide(fragments.get(CURRENT_INDEX)).show(fragments.get(index)).commit();
@@ -137,9 +165,9 @@ public class MainActivity extends AppCompatActivity
         } else {
             showSubTitle();
         }
-        if(fragments.get(index).isShowFab()){
+        if (fragments.get(index).isShowFab()) {
             getFAB().setVisibility(View.VISIBLE);
-        }else {
+        } else {
             getFAB().setVisibility(View.GONE);
         }
         fab.setOnClickListener(fragments.get(index));
