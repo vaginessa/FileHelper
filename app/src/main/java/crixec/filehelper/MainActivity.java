@@ -36,7 +36,6 @@ import crixec.filehelper.function.replace.ContentReplaceFragment;
 import crixec.filehelper.function.FileMergeFragment;
 import crixec.filehelper.function.FileRenameFragment;
 import crixec.filehelper.function.FileSplitFragment;
-import crixec.filehelper.function.FileSuffixReplaceFragment;
 import crixec.filehelper.function.browser.BrowserFragment;
 import crixec.filehelper.function.search.SearchFragment;
 
@@ -50,15 +49,15 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
 
     static class Section {
-        public static int FRAGMENT_BROWSER = 0;
-        public static int FRAGMENT_SEARCH = 1;
-        public static int FRAGMENT_CONTENT_REPLACE = 2;
-        public static int FRAGMENT_SUFFIX_REPLACE = 3;
-        public static int FRAGMENT_COMPARE = 4;
-        public static int FRAGMENT_MERGE = 5;
-        public static int FRAGMENT_SPLIT = 6;
-        public static int FRAGMENT_RENAME = 7;
-        public static int FRAGMENT_ABOUT = 8;
+        private static int i = 0;
+        public static int FRAGMENT_BROWSER = i;
+        public static int FRAGMENT_SEARCH = ++i;
+        public static int FRAGMENT_CONTENT_REPLACE = ++i;
+        public static int FRAGMENT_COMPARE = ++i;
+        public static int FRAGMENT_MERGE = ++i;
+        public static int FRAGMENT_SPLIT = ++i;
+        public static int FRAGMENT_RENAME = ++i;
+        public static int FRAGMENT_ABOUT = ++i;
     }
 
     @Override
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity
         fragments.add(BrowserFragment.newInstance(this, R.string.nav_file_browser, R.layout.fragment_browser));
         fragments.add(SearchFragment.newInstance(this, R.string.nav_file_search, R.layout.fragment_search));
         fragments.add(ContentReplaceFragment.newInstance(this, R.string.nav_file_content_replace, R.layout.fragment_content_replace));
-        fragments.add(FileSuffixReplaceFragment.newInstance(this, R.string.nav_file_suffix_replace, R.layout.fragment_suffix_replace));
         fragments.add(FileCompareFragment.newInstance(this, R.string.nav_file_compare, R.layout.fragment_file_compare));
         fragments.add(FileMergeFragment.newInstance(this, R.string.nav_file_merge, R.layout.fragment_file_merge));
         fragments.add(FileSplitFragment.newInstance(this, R.string.nav_file_split, R.layout.fragment_file_split));
@@ -271,10 +269,6 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.nav_file_content_replace: {
                 switchFragment(Section.FRAGMENT_CONTENT_REPLACE);
-                break;
-            }
-            case R.id.nav_file_suffix_replace: {
-                switchFragment(Section.FRAGMENT_SUFFIX_REPLACE);
                 break;
             }
             case R.id.nav_file_compare: {

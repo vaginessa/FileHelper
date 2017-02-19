@@ -15,10 +15,6 @@
             android:icon="@drawable/ic_content_replace"
             android:title="@string/nav_file_content_replace" />
         <item
-            android:id="@+id/nav_file_suffix_replace"
-            android:icon="@drawable/ic_suffix_replace"
-            android:title="@string/nav_file_suffix_replace" />
-        <item
             android:id="@+id/nav_file_compare"
             android:icon="@drawable/ic_compare"
             android:title="@string/nav_file_compare" />
