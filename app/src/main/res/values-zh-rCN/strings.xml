@@ -61,4 +61,11 @@
     <string name="add">添加</string>
     <string name="content_cannot_be_empty">内容不能为空</string>
     <string name="add_failed">添加失败</string>
+    <string name="start_merge">Start Merge</string>
+    <string name="stop_merge">Stop Merge</string>
+    <string name="input_output_filename">Input Output Filename</string>
+    <string name="need_to_merge_files">Need to merge files</string>
+    <string name="output_filename_cannot_be_empty">Output filename cannot be empty</string>
+    <string name="add_files">Add files</string>
+    <string name="merge_failed">Merge Failed</string>
 </resources>

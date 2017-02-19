@@ -1,14 +1,10 @@
 package crixec.filehelper.function.replace;
 
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,10 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import crixec.filehelper.BaseFragment;
-import crixec.filehelper.BuildConfig;
 import crixec.filehelper.Logger;
 import crixec.filehelper.R;
-import crixec.filehelper.SettingHelper;
 import crixec.filehelper.Utils;
 import crixec.filehelper.function.browser.BrowserFragment;
 
@@ -125,33 +119,6 @@ public class ContentReplaceFragment extends BaseFragment implements TextWatcher,
                 }
             });
             dialog.show();
-//            final AppCompatEditText editText = new AppCompatEditText(getContext());
-//            editText.setHint(R.string.add_new_paths_or_files);
-//            DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    String str = editText.getText().toString();
-//                    if (Utils.isTextEmpty(str)) {
-//                        getMainActivity().makeSnackBar(getString(R.string.content_cannot_be_empty), Snackbar.LENGTH_SHORT);
-//                        return;
-//                    }
-//                    boolean result = new File(str).exists();
-//                    if (!result) {
-//                        getMainActivity().makeSnackBar(getString(R.string.add_failed), Snackbar.LENGTH_SHORT);
-//                    }else {
-//                        targets.add(str);
-//                        adapter.notifyDataSetChanged();
-//                        refreshButtons();
-//                    }
-//                }
-//            };
-//            editText.setText(SettingHelper.getDefautlStartStorage().getPath());
-//            new AlertDialog.Builder(getContext())
-//                    .setView(editText)
-//                    .setTitle(R.string.add)
-//                    .setNegativeButton(R.string.add, onClickListener)
-//                    .setCancelable(true)
-//                    .show();
         } else if (v.getId() == R.id.stopReplaceButton) {
             synchronized (this) {
                 isReplaceable = false;

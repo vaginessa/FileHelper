@@ -33,7 +33,7 @@ import java.util.List;
 
 import crixec.filehelper.function.FileCompareFragment;
 import crixec.filehelper.function.replace.ContentReplaceFragment;
-import crixec.filehelper.function.FileMergeFragment;
+import crixec.filehelper.function.merge.FileMergeFragment;
 import crixec.filehelper.function.FileRenameFragment;
 import crixec.filehelper.function.FileSplitFragment;
 import crixec.filehelper.function.browser.BrowserFragment;
@@ -129,6 +129,18 @@ public class MainActivity extends AppCompatActivity
     public FilePickerDialog createFilePickerDialog(DialogProperties dialogProperties) {
         return new FilePickerDialog(this, dialogProperties);
     }
+
+    public FilePickerDialog createMultiOnlyFilePickerDialog() {
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.MULTI_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = new File("/");
+        properties.error_dir = new File("/");
+        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.extensions = null;
+        return createFilePickerDialog(properties);
+    }
+
     public FilePickerDialog createSingleFilePickerDialog() {
         DialogProperties properties = new DialogProperties();
         properties.selection_mode = DialogConfigs.SINGLE_MODE;

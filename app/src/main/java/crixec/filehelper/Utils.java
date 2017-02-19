@@ -15,7 +15,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by crixec on 17-2-11.
@@ -184,7 +186,7 @@ public class Utils {
     public static StringBuilder readFile(String filePath, String charsetName) {
         File file = new File(filePath);
         StringBuilder fileContent = new StringBuilder("");
-        if (file == null || !file.isFile()) {
+        if (!file.isFile()) {
             return null;
         }
 
@@ -211,13 +213,15 @@ public class Utils {
         if (closeable != null)
             try {
                 closeable.close();
-            } catch (IOException e) {
+            } catch (IOException ignored) {
 
             }
     }
+
     public static void writeFile(File file, String content) {
         writeFile(file.getPath(), content, false);
     }
+
     public static void writeFile(String filePath, String content, boolean append) {
         if (isTextEmpty(content)) {
             return;
@@ -232,5 +236,15 @@ public class Utils {
         } finally {
             Utils.close(fileWriter);
         }
+    }
+
+    @Deprecated
+    public static boolean mergeFiles(String output, String[] targets) {
+        List<String> cmds = new ArrayList<>();
+        cmds.add(String.format("echo > '%s'", output));
+        for (String file : targets) {
+            cmds.add(String.format("/system/bin/cat '%s' >> '%s'", output, file));
+        }
+        return ShellUtils.exec("", null, false) == 0;
     }
 }
