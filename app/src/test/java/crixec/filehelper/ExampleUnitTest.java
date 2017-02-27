@@ -2,6 +2,9 @@ package crixec.filehelper;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,7 +14,15 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void bigBand() throws Exception {
+        System.out.print("===Starting===\n");
+        String src = "/home/crixec/tmp/aaa/BAP";
+        int num = 20;
+        String[] parts = Utils.splitFileName(src, num);
+        long len = new File(src).length();
+        long[] sizes = Utils.splitLength(len, num);
+        System.out.println(Utils.splitFilesBySize(src, sizes, parts));
+        System.out.print("=== Ending ===\n");
     }
+
 }

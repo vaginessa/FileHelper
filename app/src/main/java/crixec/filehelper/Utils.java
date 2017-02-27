@@ -1,5 +1,7 @@
 package crixec.filehelper;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -16,6 +18,7 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +27,8 @@ import java.util.List;
  */
 
 public class Utils {
+
+    public static final int BUFFER_SIZE = 1024;
 
     public static File[] listFiles(File parentFile) {
         if (parentFile == null)
@@ -209,11 +214,14 @@ public class Utils {
         return fileContent;
     }
 
-    public static void close(Closeable closeable) {
+    public static void close(Closeable... closeable) {
         if (closeable != null)
             try {
-                closeable.close();
-            } catch (IOException ignored) {
+                for (Closeable c : closeable) {
+                    if (c != null)
+                        c.close();
+                }
+            } catch (Exception ignored) {
 
             }
     }
@@ -238,13 +246,64 @@ public class Utils {
         }
     }
 
-    @Deprecated
-    public static boolean mergeFiles(String output, String[] targets) {
-        List<String> cmds = new ArrayList<>();
-        cmds.add(String.format("echo > '%s'", output));
-        for (String file : targets) {
-            cmds.add(String.format("/system/bin/cat '%s' >> '%s'", output, file));
+    public static boolean splitFilesBySize(String src, long[] sizes, String[] outputNames) throws IOException {
+        long countSize = 0;
+        if (src != null && sizes.length == outputNames.length) {
+            File inputFile = new File(src);
+            if (!inputFile.canRead()) return false;
+            for (long size : sizes) {
+                countSize += size;
+            }
+            if (countSize != inputFile.length()) return false;
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inputFile));
+            BufferedOutputStream bos;
+            for (int i = 0; i < outputNames.length; i++) {
+                int readCount = 0;
+                int onceSize;
+                String fn = outputNames[i];
+                File outputFile = new File(fn);
+                byte[] buf = new byte[BUFFER_SIZE];
+                bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+                while (readCount < sizes[i]) {
+                    onceSize = bis.read(buf);
+                    if (onceSize < 0) break;
+                    bos.write(buf, 0, onceSize);
+                    readCount += onceSize;
+                }
+                close(bos);
+            }
+            close(bis);
+            return true;
+
         }
-        return ShellUtils.exec("", null, false) == 0;
+        return false;
+    }
+
+    public static String[] splitFileName(String srcFile, int num) {
+        String prefix = ".part%d";
+        String[] names = new String[num];
+        if (srcFile != null) {
+            for (int i = 0; i < num; i++) {
+                String name = String.format(srcFile + prefix, i);
+                names[i] = name;
+            }
+        }
+        return names;
+    }
+
+    public static long[] splitLength(long length, int num) {
+        long[] sizes = new long[num];
+        long usedSize = 0;
+        if (length >= num) {
+            for (int i = 0; i < num; i++) {
+                if (i == num - 1) {
+                    sizes[i] = length - usedSize;
+                } else {
+                    sizes[i] = length / num;
+                }
+                usedSize += sizes[i];
+            }
+        }
+        return sizes;
     }
 }
