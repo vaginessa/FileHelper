@@ -31,7 +31,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import crixec.filehelper.function.FileCompareFragment;
 import crixec.filehelper.function.replace.ContentReplaceFragment;
 import crixec.filehelper.function.merge.FileMergeFragment;
 import crixec.filehelper.function.FileRenameFragment;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         public static int FRAGMENT_BROWSER = i;
         public static int FRAGMENT_SEARCH = ++i;
         public static int FRAGMENT_CONTENT_REPLACE = ++i;
-        public static int FRAGMENT_COMPARE = ++i;
         public static int FRAGMENT_MERGE = ++i;
         public static int FRAGMENT_SPLIT = ++i;
         public static int FRAGMENT_RENAME = ++i;
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity
         fragments.add(BrowserFragment.newInstance(this, R.string.nav_file_browser, R.layout.fragment_browser));
         fragments.add(SearchFragment.newInstance(this, R.string.nav_file_search, R.layout.fragment_search));
         fragments.add(ContentReplaceFragment.newInstance(this, R.string.nav_file_content_replace, R.layout.fragment_content_replace));
-        fragments.add(FileCompareFragment.newInstance(this, R.string.nav_file_compare, R.layout.fragment_file_compare));
         fragments.add(FileMergeFragment.newInstance(this, R.string.nav_file_merge, R.layout.fragment_file_merge));
         fragments.add(FileSplitFragment.newInstance(this, R.string.nav_file_split, R.layout.fragment_file_split));
         fragments.add(FileRenameFragment.newInstance(this, R.string.nav_file_rename, R.layout.fragment_file_rename));
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         properties.selection_type = DialogConfigs.FILE_SELECT;
         properties.root = new File("/");
         properties.error_dir = new File("/");
-        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.offset = SettingHelper.getDefaultStartStorage();
         properties.extensions = null;
         return createFilePickerDialog(properties);
     }
@@ -147,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
         properties.root = new File("/");
         properties.error_dir = new File("/");
-        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.offset = SettingHelper.getDefaultStartStorage();
         properties.extensions = null;
         return createFilePickerDialog(properties);
     }
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
         properties.root = new File("/");
         properties.error_dir = new File("/");
-        properties.offset = SettingHelper.getDefautlStartStorage();
+        properties.offset = SettingHelper.getDefaultStartStorage();
         properties.extensions = null;
         return createFilePickerDialog(properties);
     }
@@ -281,10 +278,6 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.nav_file_content_replace: {
                 switchFragment(Section.FRAGMENT_CONTENT_REPLACE);
-                break;
-            }
-            case R.id.nav_file_compare: {
-                switchFragment(Section.FRAGMENT_COMPARE);
                 break;
             }
             case R.id.nav_file_merge: {

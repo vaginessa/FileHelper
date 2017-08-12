@@ -59,7 +59,7 @@ public class FileMergeFragment extends BaseFragment implements TextWatcher, Adap
         ListView listView = (ListView) findViewById(R.id.targetFileList);
         progressBar = (ContentLoadingProgressBar) findViewById(R.id.progressBar);
         outputFilenameLayout.getEditText().addTextChangedListener(this);
-        outputFilenameLayout.getEditText().setText(SettingHelper.getDefautlStartStorage().getPath());
+        outputFilenameLayout.getEditText().setText(SettingHelper.getDefaultStartStorage().getPath());
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         adapter = new ArrayAdapter(getActivity(), R.layout.layout_simple_result, targets);

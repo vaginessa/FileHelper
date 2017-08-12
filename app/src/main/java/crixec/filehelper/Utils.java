@@ -32,7 +32,7 @@ public class Utils {
 
     public static File[] listFiles(File parentFile) {
         if (parentFile == null)
-            parentFile = SettingHelper.getDefautlStartStorage();
+            parentFile = SettingHelper.getDefaultStartStorage();
         File[] files = parentFile.listFiles();
         if (files == null)
             files = new File[]{};

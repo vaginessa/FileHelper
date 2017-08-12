@@ -1,3 +1,4 @@
+de.hdodenhof.circleimageview
 int attr civ_border_color 0x7f040001
 int attr civ_border_overlay 0x7f040002
 int attr civ_border_width 0x7f040003

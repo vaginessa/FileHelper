@@ -58,7 +58,7 @@ public class BrowserFragment extends BaseFragment implements OnFileItemClickList
         recyclerView.setAdapter(recycleAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        parentFile = SettingHelper.getDefautlStartStorage();
+        parentFile = SettingHelper.getDefaultStartStorage();
         refresh();
     }
 

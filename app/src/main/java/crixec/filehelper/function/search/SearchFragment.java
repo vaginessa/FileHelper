@@ -67,7 +67,7 @@ public class SearchFragment extends BaseFragment implements TextWatcher, View.On
         adapter = new ArrayAdapter(getActivity(), R.layout.layout_simple_result, results);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
-        startPathLayout.getEditText().setText(SettingHelper.getDefautlStartStorage().getPath());
+        startPathLayout.getEditText().setText(SettingHelper.getDefaultStartStorage().getPath());
         progressBar.setIndeterminate(false);
     }
 

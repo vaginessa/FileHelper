@@ -9,7 +9,7 @@ import java.io.File;
  */
 
 public class SettingHelper {
-    public static File getDefautlStartStorage() {
+    public static File getDefaultStartStorage() {
         if (BuildConfig.DEBUG)
             return new File(Environment.getExternalStorageDirectory(), "test");
         return Environment.getExternalStorageDirectory();
